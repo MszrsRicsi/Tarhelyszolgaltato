@@ -1,0 +1,64 @@
+@baseUrl = http://localhost:3000/api
+@authToken = {{login.response.body.token}}
+
+### Register user 
+# @name register
+
+POST  {{baseUrl}}/users/register
+Content-Type: application/json
+
+{
+    "name": "Teszt Elek",
+    "email": "tesztelek@gmail.com",
+    "password": "123456",
+    "phone": "+36-30/333-22-11",
+    "address": "6500 Baja, Béke tér 1."
+}
+
+### login user
+# @name login
+
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+    "email": "tesztelek@gmail.com",
+    "password": "123456"
+}
+
+### get all users
+# @name getUsers
+
+GET {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+### get user by id
+# @name getUserByID
+
+GET {{baseUrl}}/users/5874c18b-fb48-464c-b06e-9701d9f9ae4d
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+### update user by id
+# @name updateUserByID
+
+PATCH {{baseUrl}}/users/5874c18b-fb48-464c-b06e-9701d9f9ae4d
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Teszt Elek",
+    "email": "tesztelek@gmail.com",
+    "password": "123456",
+    "confirm": "123456",
+    "phone": "+36-30/333-22-11",
+    "address": "6500 Baja, Béke tér 1."
+}
+
+### delete user by id
+# @name deleteUserByID
+
+DELETE {{baseUrl}}/users/5874c18b-fb48-464c-b06e-9701d9f9ae4d
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
