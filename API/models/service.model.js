@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/database');
 
-const User = db.define('User', {
+const Service = db.define('Service', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -11,23 +11,15 @@ const User = db.define('User', {
         type: DataTypes.STRING(40),
         allowNull: false
     },
-    email: {
-        type: DataTypes.STRING(100),
+    price: {
+        type: DataTypes.DOUBLE,
         allowNull: false,
         unique: true
     },
-    password: {
-        type: DataTypes.STRING(100),
+    description: {
+        type: DataTypes.TEXT,
         allowNull: false
-    },
-    role: {
-        type: DataTypes.STRING(30),
-        allowNull: true
-    },
-    domain: {
-        type: DataTypes.STRING(100),
-        allowNull: true
     }
 });
 
-module.exports = { User };
+module.exports = { Service };

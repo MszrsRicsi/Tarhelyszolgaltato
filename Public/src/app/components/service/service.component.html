@@ -1,0 +1,12 @@
+<div class="cardContainer">
+    <p-card class="card" *ngFor="let service of services" header="{{service.name}}" subheader="{{service.price}} Ft" [style]="{ width: '360px' }">
+        <p>
+            {{service.description}}
+        </p>
+        <ng-template pTemplate="footer">
+            <div class="flex gap-3 mt-1">
+                <p-button (onClick)="selectService(service.id)" label="Select" class="w-full" styleClass="w-full"/>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

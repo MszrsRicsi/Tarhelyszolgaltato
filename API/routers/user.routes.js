@@ -3,10 +3,6 @@ const router = express.Router();
 const userController = require('../controllers/user.controller');
 const { authMiddleware } = require('../middlewares/auth.middleware');
 
-/**
- * USER modul útvonalai
- */
-
 // register new user
 router.post('/register', userController.register);
 

@@ -1,1 +1,12 @@
-<p>registration works!</p>
+<div class="registrationContainer">
+    <div class="registrationBox">
+        <h1>Registration</h1>
+
+        <input type="text" placeholder="Username" pInputText [(ngModel)]="user.name"/>
+        <input type="text" placeholder="Email" pInputText [(ngModel)]="user.email"/>
+        <input type="text" placeholder="Password" pInputText [(ngModel)]="user.password"/>
+        <input type="text" placeholder="Confirm password" pInputText [(ngModel)]="user.confirm"/>
+
+        <p-button (onClick)="register()" label="Register" />
+    </div>
+</div>

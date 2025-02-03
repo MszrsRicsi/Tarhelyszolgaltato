@@ -5,7 +5,6 @@ const express = require('express');
 const cors = require('cors');
 const config = require('./config/config');
 const db = require('./config/database');
-const routes = require('./routers/index');
 const errorMiddleware = require('./middlewares/error.middleware');
 
 const app = express();
@@ -15,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // útvonalak lekezelése
-app.use('/api', routes);
+app.use('/api', require('./routers/index'));
 app.use(errorMiddleware);
 
 // ORM adatbázis szinkronizáció

@@ -1,22 +1,39 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { StatisticsComponent } from './statistics/statistics.component';
-import { TimelineComponent } from './timeline/timeline.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ServiceComponent } from './components/service/service.component';
+import { DetailsComponent } from './components/details/details.component';
+import { UserAuthGuard } from './guards/UserAuthGuard';
+import { LogoutComponent } from './components/logout/logout.component';
+
 
 export const routes: Routes = [
     {
-        path: "", component: HomeComponent
+        path: "", redirectTo: "login", pathMatch: "full"
     },
     {
-        path: "home", component: HomeComponent
+        path: "login", component: LoginComponent
     },
     {
-        path: "statistics", component: StatisticsComponent
+        path: "registration", component: RegistrationComponent
     },
     {
-        path: "timeline", component: TimelineComponent
+        path: "services", canActivate: [UserAuthGuard],
+        children: 
+        [
+            {
+                path: "", component: ServiceComponent
+            },
+            {
+                path: "details/:id", component: DetailsComponent
+            }
+        ]
     },
     {
-        path: "**", component: HomeComponent
+        path: "logout", component: LogoutComponent
+    },
+    {
+        path: "**", component: PageNotFoundComponent
     }
 ];

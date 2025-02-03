@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,17 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  server = `http://localhost:3000`;
+  server = `http://localhost:3000/api/`;
+
+  login(table: string, user: object)
+  {
+    return this.http.post(`${this.server}/${table}/login`, user);
+  }
+
+  register(table: string, user: object)
+  {
+    return this.http.post(`${this.server}/${table}/register`, user);
+  }
 
   selectAll(table:string){
     return this.http.get(`${this.server}/${table}`);
@@ -26,9 +35,5 @@ export class ApiService {
 
   insert(table:string, data: object){
     return this.http.post(`${this.server}/${table}`, data);
-  }
-
-  upload(form: FormData, id:number){
-    return this.http.post(`${this.server}/upload/${id}`, form);
   }
 }

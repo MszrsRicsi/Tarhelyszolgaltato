@@ -1,6 +1,3 @@
-/**
- * Érzékeny adatok kezelése, kiolvasása a .env fájlból
- */
 require('dotenv').config();
 
 module.exports = {

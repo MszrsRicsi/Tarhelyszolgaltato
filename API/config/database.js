@@ -1,7 +1,3 @@
-/**
- *  Adatbázis kapcsolat felépítése Sequelize-al 
- */
-
 const { Sequelize } = require('sequelize');
 const config = require('./config');
 
@@ -17,4 +13,3 @@ const db = new Sequelize(
 )
 
 module.exports = db;
-

@@ -2,15 +2,15 @@ const { User } = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/token');
 
-exports.registerUser = async (name, email, password, phone, address) => {
+exports.registerUser = async (name, email, password, role, domain) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
         name,
         email,
-        phone,
-        address,
-        password: hashedPassword
+        password: hashedPassword,
+        role,
+        domain,
     });
 
     return user;
@@ -23,7 +23,7 @@ exports.loginUser = async (email, password) => {
 
     if (!await bcrypt.compare(password, user.password)) throw new Error('Hibás jelszó!');
 
-    const token = generateToken({ id: user.id, name: user.name, email: user.email});
+    const token = generateToken({ id: user.id, name: user.name, email: user.email, role: "user", domain: user.domain});
     
     return { token }; 
 }
