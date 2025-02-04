@@ -9,15 +9,11 @@ const Subscription = db.define('Subscription', {
     },
     userID: {
         type: DataTypes.UUID,
-        allowNull: false
-    },
-    csomagID: {
-        type: DataTypes.UUID,
         allowNull: false,
         unique: true
     },
-    date: {
-        type: DataTypes.DATE,
+    csomagID: {
+        type: DataTypes.UUID,
         allowNull: false
     }
 });

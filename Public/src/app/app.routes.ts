@@ -6,6 +6,7 @@ import { ServiceComponent } from './components/service/service.component';
 import { DetailsComponent } from './components/details/details.component';
 import { UserAuthGuard } from './guards/UserAuthGuard';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ServiceGuard } from './guards/ServiceGuard';
 
 
 export const routes: Routes = [
@@ -23,10 +24,10 @@ export const routes: Routes = [
         children: 
         [
             {
-                path: "", component: ServiceComponent
+                path: "", component: ServiceComponent, canActivate: [ServiceGuard]
             },
             {
-                path: "details/:id", component: DetailsComponent
+                path: "details", component: DetailsComponent
             }
         ]
     },

@@ -1,1 +1,13 @@
-<p>details works!</p>
+<div *ngIf="!hasService">
+    <h1>Nincs csomagod!</h1>
+</div>
+
+<div *ngIf="hasService">
+    <h1>A csomagod specifikációja!</h1>
+
+    <p>Csomag név: {{service.name}}</p>
+    <p>Csomag ár: {{service.price}} Ft</p>
+    <p>Csomag leírás: {{service.description}}</p>
+
+    <p-button (onClick)="revokeService(service.id)" label="Csomag lemondása" [text]="true" styleClass="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"  />
+</div>

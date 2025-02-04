@@ -13,8 +13,7 @@ const Service = db.define('Service', {
     },
     price: {
         type: DataTypes.DOUBLE,
-        allowNull: false,
-        unique: true
+        allowNull: false
     },
     description: {
         type: DataTypes.TEXT,

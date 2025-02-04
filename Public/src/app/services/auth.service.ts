@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import environment from '../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  constructor(){}
+  constructor(private router: Router){}
 
   private isLoggedIn = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$: Observable<boolean> = this.isLoggedIn.asObservable();
@@ -27,6 +28,7 @@ export class AuthService {
   {
     localStorage.removeItem(environment.tokenName);
     this.isLoggedIn.next(false);
+    this.router.navigate(["/login"]);
   }
 
   getLoggedInUser()
