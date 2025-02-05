@@ -22,7 +22,7 @@ export class ServiceComponent implements OnInit {
   ){}
 
   services: any = [];
-
+  selectedServiceID: any;
   visible = false;
 
   ngOnInit(): void {
@@ -36,9 +36,10 @@ export class ServiceComponent implements OnInit {
     })
   }
 
-  selectService()
+  selectService(serviceId:any)
   {
     this.visible = true;
+    this.selectedServiceID = serviceId;
   }
 
   closePopup()
@@ -46,9 +47,9 @@ export class ServiceComponent implements OnInit {
     this.visible = false;
   }
 
-  buyService(serviceID: string)
+  buyService()
   {
-    this.api.buyService(this.auth.getLoggedInUser().id, serviceID).subscribe((res: any) => {});
+    this.api.buyService(this.auth.getLoggedInUser().id, this.selectedServiceID).subscribe((res: any) => {});
     this.router.navigate(["/services/details"]);
     this.closePopup();
   }

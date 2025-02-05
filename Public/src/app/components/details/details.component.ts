@@ -40,7 +40,6 @@ export class DetailsComponent implements OnInit{
   {
     this.api.deleteSubscription(this.auth.getLoggedInUser().id, serviceID).subscribe((res: any) => {
       this.router.navigate(["/services"]);
-      console.log(res);
     });
   }
 }

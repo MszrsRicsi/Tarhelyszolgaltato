@@ -5,36 +5,35 @@
         </p>
         <ng-template pTemplate="footer">
             <div class="flex gap-3 mt-1">
-                <p-button (onClick)="selectService()" label="Select" class="w-full" styleClass="w-full"/>
-
-                <p-dialog [(visible)]="visible">
-                    <ng-template pTemplate="headless">
-                        <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-400), var(--primary-700))">
-                            <div class="inline-flex flex-column gap-2">
-                                <label for="cardNumber" class="text-primary-50 font-semibold">Card number</label>
-                                <input pInputText id="cardNumber" class="bg-white-alpha-20 border-none p-3 text-primary-50"/>
-                            </div>
-                            <div class="inline-flex flex-column gap-2">
-                                <label for="nameOnCard" class="text-primary-50 font-semibold">Name on card</label>
-                                <input pInputText id="nameOnCard" class="bg-white-alpha-20 border-none p-3 text-primary-50" type="text"/>
-                            </div>
-                            <div class="inline-flex flex-column gap-2">
-                                <label for="expireDate" class="text-primary-50 font-semibold">Expiry date</label>
-                                <input pInputText id="expireDate" class="bg-white-alpha-20 border-none p-3 text-primary-50" type="date"/>
-                            </div>
-                            <div class="inline-flex flex-column gap-2">
-                                <label for="secCode" class="text-primary-50 font-semibold">Security code</label>
-                                <input pInputText id="secCode" class="bg-white-alpha-20 border-none p-3 text-primary-50" type="password"/>
-                            </div>
-                
-                            <div class="inline-flex align-items-center gap-2">
-                                <p-button (onClick)="closePopup()" label="Cancel" [text]="true"  styleClass="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full" />
-                                <p-button (onClick)="buyService(service.id)" label="Proceed" [text]="true" styleClass="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"  />
-                            </div>
-                        </div>
-                    </ng-template>
-                </p-dialog>
+                <p-button (onClick)="selectService(service.id)" label="Select" class="w-full" styleClass="w-full"/>
             </div>
         </ng-template>
     </p-card>
 </div>
+
+<p-dialog [(visible)]="visible">
+    <ng-template pTemplate="headless">
+        <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-400), var(--primary-700))">
+            <div class="inline-flex flex-column gap-2">
+                <label for="cardNumber" class="text-primary-50 font-semibold">Card number</label>
+                <input pInputText id="cardNumber" class="bg-white-alpha-20 border-none p-3 text-primary-50"/>
+            </div>
+            <div class="inline-flex flex-column gap-2">
+                <label for="nameOnCard" class="text-primary-50 font-semibold">Name on card</label>
+                <input pInputText id="nameOnCard" class="bg-white-alpha-20 border-none p-3 text-primary-50" type="text"/>
+            </div>
+            <div class="inline-flex flex-column gap-2">
+                <label for="expireDate" class="text-primary-50 font-semibold">Expiry date</label>
+                <input pInputText id="expireDate" class="bg-white-alpha-20 border-none p-3 text-primary-50" type="date"/>
+            </div>
+            <div class="inline-flex flex-column gap-2">
+                <label for="secCode" class="text-primary-50 font-semibold">Security code</label>
+                <input pInputText id="secCode" class="bg-white-alpha-20 border-none p-3 text-primary-50" type="password"/>
+            </div>
+            <div class="inline-flex align-items-center gap-2">
+                <p-button (onClick)="closePopup()" label="Cancel" [text]="true"  styleClass="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full" />
+                <p-button (onClick)="buyService()" label="Proceed" [text]="true" styleClass="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"  />
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
