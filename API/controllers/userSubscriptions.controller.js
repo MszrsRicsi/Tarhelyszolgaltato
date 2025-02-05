@@ -1,4 +1,5 @@
 const db = require('../config/database');
+const router = require('express').Router();
 
 function generatePassword(){
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!#@%';
@@ -9,7 +10,7 @@ function generatePassword(){
     return password;
 }
 
-app.post('/create-database', (req, res) => {
+router.post('/create-database', (req, res) => {
     const { dbname } = req.body;
     if (!dbname){
         return res.status(400).json({message: 'Database name is required!'});
@@ -26,7 +27,7 @@ app.post('/create-database', (req, res) => {
 
 });
 
-app.post('/create-user', (req, res) => {
+router.post('/create-user', (req, res) => {
     const { username } = req.body;
     if (!username){
         return res.status(400).json({message: 'Username is required!'});
@@ -41,16 +42,18 @@ app.post('/create-user', (req, res) => {
     });
 });
 
-app.post('/grant-privileges', (req, res) => {
+router.post('/grant-privileges', (req, res) => {
     const {username, dbname, privileges} = req.body;
     if (!username || !dbname || !privileges){
         return res.status(400).json({message: 'Missing data!'});
     }
-    const sql = `USE ${dbname}; GRANT ${privileges} ON \`${dbname}\`.* TO '${username}'@'localhost'`;
+    const sql = `USE ${dbname}; GRANT SELECT, INSERT, UPDATE, DELETE ON \`${dbname}\`.* TO '${username}'@'localhost'`;
     db.query(sql, (err, results) => {
         if (err){
             return res.status(500).json({message: err});
         }
-        res.status(200).json({message: `Granted ${privileges} to ${username} on ${dbname}!`, data: results});
+        res.status(200).json({message: `Granted privileges to ${user.name} on ${dbname}!`, data: results});
     });
 });
+
+module.exports = router;
