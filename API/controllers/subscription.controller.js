@@ -1,4 +1,6 @@
 const subscriptionService = require('../services/subscription.service');
+const { sendEmail } = require('../services/email.service');
+const { User } = require('../models/user.model')
 
 exports.getAllSubsriptions = async (req, res, next) => {
     try{
@@ -24,7 +26,12 @@ exports.createSubsription = async (req, res, next) => {
             return res.status(400).json({ message: 'Hiányzó adatok!'});
         }
         const subs = await subscriptionService.createSubsription(req.params.userID, req.params.serviceID);
+
+        const user = await User.findOne({where: {id: req.params.userID}});
+
+        sendEmail(user.email, 'Whalecum!', `Hello ${user.name}, thank you for registering!`);
         res.status(200).json(subs);
+
     }catch(error){
         next(error);
     }
