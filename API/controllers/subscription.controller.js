@@ -1,6 +1,7 @@
-const subscriptionService = require('../services/subscription.service');
 const { sendEmail } = require('../services/email.service');
-const { User } = require('../models/user.model')
+const { User } = require('../models/user.model');
+const { Service } = require('../models/service.model');
+const { Subscription } = require('../models/subscription.model');
 const db = require('../config/database');
 
 function generatePassword(){
@@ -14,28 +15,34 @@ function generatePassword(){
 
 exports.getAllSubsriptions = async (req, res, next) => {
     try{
-        const subs = await subscriptionService.getAllSubsriptions();
-        res.status(200).json({success:true, results: subs});
+        res.status(200).json({success:true, results: await Subscription.findAll()});
     }catch(error){
         next(error);
     }
 }
 
-exports.getAllSubsriptionByUserID = async (req, res, next) => {
+exports.getSubsriptionByUserID = async (req, res, next) => {
+    if (!req.params.userID){
+        return res.status(400).json({ message: 'Hiányzó adatok!'});
+    }
+
     try{
-        const subs = await subscriptionService.getAllSubsriptionByUserID(req.params.userID);
-        res.status(200).json({success:true, results: subs});
+        res.status(200).json({success:true, results: await Subscription.findOne({where: {userID: req.params.userID}})});
     }catch(error){
         next(error);
     }
 }
 
 exports.createSubsription = async (req, res, next) => {
+    if (!req.params.userID || !req.params.serviceID){
+        return res.status(400).json({ message: 'Hiányzó adatok!'});
+    }
+
     try{
-        if (!req.params.userID || !req.params.serviceID){
-            return res.status(400).json({ message: 'Hiányzó adatok!'});
-        }
-        const subs = await subscriptionService.createSubsription(req.params.userID, req.params.serviceID);
+        await Subscription.create({
+            userID: req.params.userID,
+            csomagID: req.params.serviceID
+        });
 
         const user = await User.findOne({where: {id: req.params.userID}});
 
@@ -56,7 +63,7 @@ exports.createSubsription = async (req, res, next) => {
             res.status(200).json({message: 'User created successfully!', data: results, password});
         });
 
-        const sql = `USE ${user.name}; GRANT "SELECT, INSERT, UPDATE, DELETE" ON \`${user.name}\`.* TO '${user.name}'@'localhost'`;
+        const sql = `GRANT SELECT, INSERT, UPDATE, DELETE ON \`${user.name}\`.* TO '${user.name}'@'localhost'`; // GRANT SELECT, INSERT, UPDATE, DELETE ON a.* TO 'a'@'localhost'
         db.query(sql, (err, results) => {
             if (err){
                 return res.status(500).json({message: err});
@@ -65,7 +72,7 @@ exports.createSubsription = async (req, res, next) => {
         });
 
         sendEmail(user.email, 'Database credentials!', `Whalecum ${user.name}, you access your database on ${user.name} and ${password}`);
-        res.status(200).json(subs);
+        res.status(200).json("Subscription purchased");
 
     }catch(error){
         next(error);
@@ -73,12 +80,43 @@ exports.createSubsription = async (req, res, next) => {
 }
 
 exports.revokeSubsriptionByID = async (req, res, next) => {
+    if (!req.params.userID || !req.params.serviceID){
+        return res.status(400).json({ message: 'Hiányzó adatok!'});
+    }
+
     try{
-        if (!req.params.userID || !req.params.serviceID){
-            return res.status(400).json({ message: 'Hiányzó adatok!'});
-        }
-        const subs = await subscriptionService.revokeSubsriptionByID(req.params.userID, req.params.serviceID);
-        res.status(200).json(subs);
+        const user = await User.findOne({where: {id: req.params.userID}});
+
+        const sql1 = `DROP DATABASE \`${user.name}\``;
+        db.query(sql1, (err, results) => {
+            if (err){
+                return res.status(500).json({message: err});
+            }
+            res.status(200).json({message: 'Database deleted successfully!', data: results});
+        });
+
+        const sql2 = `DROP USER '${user.name}'@'localhost'`;
+        db.query(sql2, (err, results) => {
+            if (err){
+                return res.status(500).json({message: err});
+            }
+            res.status(200).json({message: 'User deleted successfully!', data: results});
+        });
+
+        res.status(200).json(await Subscription.destroy({where: {csomagID: req.params.serviceID, userID: req.params.userID}}));
+    }catch(error){
+        next(error);
+    }
+}
+
+exports.getAllRelated = async (req, res, next) => {
+    try{
+        res.status(200).json({success: true, results: await Subscription.findAll({
+            include: [
+                {model: User},
+                {model: Service}
+            ]
+        })});
     }catch(error){
         next(error);
     }

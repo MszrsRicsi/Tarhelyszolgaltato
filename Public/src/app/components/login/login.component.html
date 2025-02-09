@@ -1,10 +1,10 @@
 <div class="loginContainer">
     <div class="loginBox">
-        <h1>Login</h1>
+        <h1>Bejelentkezés</h1>
 
         <input type="text" placeholder="Email" pInputText [(ngModel)]="user.email"/>
-        <input type="text" placeholder="Password" pInputText [(ngModel)]="user.password"/>
+        <input type="password" placeholder="Jelszó" pInputText [(ngModel)]="user.password"/>
 
-        <p-button (onClick)="login()" label="Login" />
+        <p-button (onClick)="login()" label="Bejelentkezés" />
     </div>
 </div>

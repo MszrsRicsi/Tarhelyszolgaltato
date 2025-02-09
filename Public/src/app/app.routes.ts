@@ -7,6 +7,7 @@ import { DetailsComponent } from './components/details/details.component';
 import { UserAuthGuard } from './guards/UserAuthGuard';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ServiceGuard } from './guards/ServiceGuard';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 export const routes: Routes = [
@@ -30,6 +31,9 @@ export const routes: Routes = [
                 path: "details", component: DetailsComponent
             }
         ]
+    },
+    {
+        path: "admin", component: AdminComponent
     },
     {
         path: "logout", component: LogoutComponent

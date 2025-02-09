@@ -49,8 +49,9 @@ export class ServiceComponent implements OnInit {
 
   buyService()
   {
-    this.api.buyService(this.auth.getLoggedInUser().id, this.selectedServiceID).subscribe((res: any) => {});
-    this.router.navigate(["/services/details"]);
-    this.closePopup();
+    this.api.buyService(this.auth.getLoggedInUser().id, this.selectedServiceID).subscribe(() => {
+      this.closePopup();
+      this.router.navigate(["/services/details"]);
+    });
   }
 }

@@ -64,4 +64,14 @@ export class ApiService {
   {
     return this.http.delete(`${this.server}/subscriptions/${userID}/${id}`, this.tokenHeader());
   }
+
+  getAllRelated()
+  {
+    return this.http.get(`${this.server}/subscriptions/get/AllRelated`, this.tokenHeader());
+  }
+
+  modifySericeName(serviceID: string, data: object)
+  {
+    return this.http.patch(`${this.server}/services/${serviceID}`, data ,this.tokenHeader());
+  }
 }

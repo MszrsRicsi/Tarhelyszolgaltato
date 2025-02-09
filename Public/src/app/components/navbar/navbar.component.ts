@@ -31,23 +31,30 @@ export class NavbarComponent implements OnInit{
     this.items = [
       ...(this.isLoggedIn ? [
         {
-          label: "Services",
+          label: "Szolgáltatások",
           route: "services",
           icon: "",
         },
+        ...(this.auth.getLoggedInUser().role == "admin") ? [
+          {
+            label: "Adminisztráció",
+            route: "admin",
+            icon: ""
+          },
+        ]: [],
         {
-          label: "Logout",
+          label: "Kijelentkezés",
           route: "logout",
           icon: ""
         }
       ] : [
         {
-          label: "Login",
+          label: "Bejelentkezés",
           route: "login",
           icon: "",
         },
         {
-          label: "Registration",
+          label: "Regisztráció",
           route: "registration",
           icon: "",
         },

@@ -7,6 +7,6 @@ router.get('/', authMiddleware, servicesController.getAllServices);
 
 router.get('/:id', authMiddleware, servicesController.getServiceByID);
 
-//router.delete('/:id', );
+router.patch('/:id', authMiddleware, servicesController.updateServiceByID);
 
 module.exports = router;

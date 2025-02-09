@@ -17,6 +17,8 @@ app.use(express.urlencoded({extended: true}));
 app.use('/api', require('./routers/index'));
 app.use(errorMiddleware);
 
+require("./config/syncer");
+
 // ORM adatbázis szinkronizáció
 db.sync({alter: config.db.alter, force: config.db.force})
     .then(()=>{
