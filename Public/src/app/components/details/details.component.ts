@@ -4,24 +4,30 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { Message, MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, MessagesModule, FormsModule],
   templateUrl: './details.component.html',
-  styleUrl: './details.component.scss'
+  styleUrl: './details.component.scss',
+  providers: [MessageService]
 })
 export class DetailsComponent implements OnInit{
   constructor(
     private api: ApiService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private message: MessageService
   ){}
 
   hasService: boolean = false;
 
   service: any = [];
+  messages: Message[] = [];
 
   ngOnInit(): void {
     this.api.getSubscriptionByUserID(this.auth.getLoggedInUser().id).subscribe((res: any) => {
@@ -32,6 +38,10 @@ export class DetailsComponent implements OnInit{
         this.api.select("services", res.results.csomagID).subscribe((subRes: any) => {
           this.service = subRes.results;
         });
+      }
+      console.log(res)
+      if (res) {
+        this.messages =[ { severity: 'success', summary: 'A bejelentkezési adatokat emailben elküldtük' }];
       }
     });
   }
