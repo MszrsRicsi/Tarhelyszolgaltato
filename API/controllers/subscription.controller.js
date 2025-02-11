@@ -74,7 +74,7 @@ exports.createSubsription = async (req, res, next) => {
             console.log({message: `Granted privileges to ${dbName} on database: ${dbName}!`, data: results});
         });
 
-        sendEmail(user.email, 'Database credentials!', `Whalecum ${dbName}, you access your database on ${dbName} and ${password}`);
+        sendEmail(user.email, 'Database credentials!', `Whalecum ${user.name}, you access your database on ${dbName} and ${password}`);
         res.status(200).json("Subscription purchased");
 
     }catch(error){

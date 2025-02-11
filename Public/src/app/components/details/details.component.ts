@@ -39,7 +39,7 @@ export class DetailsComponent implements OnInit{
           this.service = subRes.results;
         });
       }
-      console.log(res)
+      //console.log(res)
       if (res) {
         this.messages =[ { severity: 'success', summary: 'A bejelentkezési adatokat emailben elküldtük' }];
       }
